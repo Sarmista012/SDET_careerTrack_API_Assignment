@@ -10,7 +10,7 @@ class IniConfig:
         self.path = p
         self._parser = ConfigParser()
 
-        # utf-8-sig strips a BOM if present
+
         with p.open("r", encoding="utf-8-sig") as f:
             self._parser.read_file(f)
 

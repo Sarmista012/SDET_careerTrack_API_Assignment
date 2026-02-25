@@ -20,3 +20,28 @@ class BookingClient:
         except Exception:
             pass
         return resp, bookingid
+
+    def get_booking(self, bookingid: int):
+        url = self.base_url + f"/booking/{bookingid}"
+        headers = {"Accept": "application/json"}
+        resp = requests.get(url, headers=headers, timeout=30)
+        data = resp.json() if "application/json" in resp.headers.get("Content-Type", "").lower() else None
+        return resp, data
+
+    def update_booking(self, bookingid: int, payload: dict, token: str):
+        url = self.base_url + f"/booking/{bookingid}"
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Cookie": f"token={token}",
+        }
+        resp = requests.put(url, json=payload, headers=headers, timeout=30)
+        return resp, resp.json()
+
+    def delete_booking(self, bookingid: int, token: str):
+        url = self.base_url + f"/booking/{bookingid}"
+        headers = {
+            "Content-Type": "application/json",
+            "Cookie": f"token={token}",
+        }
+        return requests.delete(url, headers=headers, timeout=30)
