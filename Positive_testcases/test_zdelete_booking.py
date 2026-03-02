@@ -1,3 +1,6 @@
+from logs import logger
+
+
 def test_delete_all_5_bookings(created_bookings, booking_client, token):
     for item in created_bookings:
         booking_id = item["id"]

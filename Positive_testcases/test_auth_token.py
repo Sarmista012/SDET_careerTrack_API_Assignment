@@ -1,3 +1,4 @@
+from logs import logger
 from src.api.auth_client import AuthClient
 from src.utils.ini_config import IniConfig
 

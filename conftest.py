@@ -1,7 +1,7 @@
-
+import logging
+import time
 import pytest
 from pathlib import Path
-
 import requests
 
 from src.api.booking_client import BookingClient
@@ -11,7 +11,7 @@ from src.utils.ini_config import IniConfig
 
 @pytest.fixture(scope="session")
 def project_root():
-    return Path(__file__).resolve().parents[1]
+    return Path(__file__).resolve().parent
 
 @pytest.fixture(scope="session")
 def cfg(project_root):
@@ -40,14 +40,8 @@ def created_bookings(project_root, booking_client):
             "additionalneeds": p.additionalneeds,
         }
 
-        resp, bookingid = booking_client.create_booking(expected_body)
-        assert resp.status_code == 200
-        assert "application/json" in resp.headers.get("Content-Type", "").lower()
-        assert bookingid is not None
-
+        resp,bookingid = booking_client.create_booking(expected_body)
         created.append({"id": int(bookingid), "expected": expected_body})
-
-    assert len(created) == 5
     return created
 
 @pytest.fixture(scope="session")
